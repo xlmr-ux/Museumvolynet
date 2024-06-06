@@ -2,7 +2,7 @@ import { useState } from "react";
 import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 
-import { ARCanvas, ARMarker } from "@artcom/react-three-arjs";
+import { ARCanvas, ARMarker } from "./components/ar";
 import { useGLTF } from "@react-three/drei";
 
 function Box() {
@@ -10,7 +10,7 @@ function Box() {
 
   return (
     <mesh onClick={() => setSelected(!selected)}>
-      <Model path="data/models/duck_animation.glb" />
+      <Model path="data/models/Womens Cairn.glb" />
       <meshStandardMaterial color={selected ? "yellow" : "hotpink"} />
     </mesh>
   );
@@ -18,7 +18,7 @@ function Box() {
 
 function Model({ path }) {
   const gltf = useGLTF(path);
-  return <primitive object={gltf.scene} />;
+  return <primitive scale={0.2} object={gltf.scene} />;
 }
 
 function App() {
