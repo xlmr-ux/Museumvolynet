@@ -1,20 +1,16 @@
-import React, { useRef, useState } from "react";
 import { useGLTF } from "@react-three/drei";
 import useLastCallback from "../../lib/hooks/useLastCallback";
 
-const ModelViewer = (
-  {
-    path,
-    visible = true,
-    onClick,
-    onMouseEnter,
-    onMouseLeave,
-    onError = () => null,
-  },
-  ref
-) => {
+const ModelViewer = ({
+  ref,
+  path,
+  visible = true,
+  onClick,
+  onMouseEnter,
+  onMouseLeave,
+  onError = () => null,
+}) => {
   const gltf = useGLTF(path);
-  const [loaded, setLoaded] = useState(false);
 
   const handleLoad = useLastCallback(() => {
     setLoaded(true);
@@ -29,7 +25,7 @@ const ModelViewer = (
       <primitive
         ref={ref}
         object={gltf.scene}
-        visible={visible && loaded}
+        visible={visible}
         onClick={onClick}
         onPointerOver={onMouseEnter}
         onPointerOut={onMouseLeave}
@@ -40,4 +36,4 @@ const ModelViewer = (
   );
 };
 
-export default React.forwardRef(ModelViewer);
+export default ModelViewer;

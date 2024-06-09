@@ -9,7 +9,7 @@ const data = [
     title: "Art",
     data: [
       {
-        id: 1,
+        id: "womens_cairn",
         model: "womens_cairn",
         imgSrc:
           "https://images.unsplash.com/photo-1532614338840-ab30cf10ed36?auto=format&fit=crop&w=318",
@@ -20,7 +20,7 @@ const data = [
         time: "1 hour ago",
       },
       {
-        id: 2,
+        id: "angel_statue",
         model: "angel_statue",
         imgSrc:
           "https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0?auto=format&fit=crop&w=318",

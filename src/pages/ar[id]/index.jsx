@@ -1,29 +1,46 @@
-import { useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { ARCanvas, ARMarker } from "../../components/ar";
-import { useGLTF } from "@react-three/drei";
-import { Text, Billboard, Line } from "@react-three/drei";
-import ElementPointer from "../../components/ui/ElementPointer.jsx";
+
 import AdditionalText from "../../components/AdditionalText.jsx";
 
-import {
-  Stack,
-  Typography,
-  IconButton,
-  Box,
-  Tooltip,
-  CircularProgress,
-} from "@mui/joy";
+import { Stack, IconButton, Box } from "@mui/joy";
 import { HexToRGBA } from "../../lib/utils/colors.js";
 
-import useLastCallback from "../../lib/hooks/useLastCallback.js";
 import ModelViewer from "../../components/ui/ModelViewer.jsx";
-import TooltipButton from "../../components/TooltipButton.jsx";
-
-//[x, y, z]
+import {
+  useLabelsStore,
+  useModelStore,
+  useSceneLightStore,
+} from "./store/index.js";
+import SideDrawer from "../../components/SideDrawer/index.jsx";
+import { ModelData } from "./api/index.js";
+import { memo, useEffect } from "react";
+import {
+  DrawerButton,
+  HideInterfaceButton,
+  DisableLablesButton,
+  BackToHomeButton,
+  LightToggleButton,
+} from "./ui/buttons.jsx";
+import Main from "./ui/middle/Main.jsx";
+import { useThree } from "@react-three/fiber";
+import { Color } from "three";
+import { useDocumentTitle } from "../../lib/hooks/useDocumentTitle.js";
 
 const Scene = () => {
+  const visible = useLabelsStore((state) => state.visible);
   const { model } = useParams();
+
+  useDocumentTitle(model.split("_").join(" "));
+
+  const { modelData, setModelData } = useModelStore((state) => ({
+    modelData: state.modelData,
+    setModelData: state.setModelData,
+  }));
+
+  useEffect(() => {
+    setModelData(ModelData.find((data) => data.id === model));
+  }, [model]);
 
   const handleClick = () => {
     console.log("Model clicked!");
@@ -47,27 +64,76 @@ const Scene = () => {
         onMouseLeave={handleMouseLeave}
         onError={(error) => console.error("Error loading model:", error)}
       />
-
-      <AdditionalText
-        text={"Lorem ipsum"}
-        from={[2, 1, 0]}
-        to={[6, 5, 5]}
-        fontSize={0.5}
-        color="white"
-        maxWidth={3}
-      />
-
-      <AdditionalText
-        text={"Lorem ipsum"}
-        from={[0, 5, 0]}
-        to={[6, 5, -5]}
-        fontSize={0.5}
-        color="white"
-        maxWidth={3}
-      />
+      {visible &&
+        modelData?.labels?.map((label) => (
+          <AdditionalText
+            key={label.id}
+            text={label.name}
+            from={label.from}
+            to={label.to}
+            fontSize={0.5}
+            color="white"
+            maxWidth={3}
+          />
+        ))}
     </mesh>
   );
 };
+
+const Lights = () => {
+  const { scene } = useThree();
+  const lightVisibility = useSceneLightStore((state) => state.lightVisibility);
+
+  scene.background = lightVisibility ? new Color(0xe3dac9) : null;
+
+  return (
+    <>
+      <ambientLight intensity={0.5} />
+      <directionalLight
+        intensity={1}
+        position={[5, 10, 7.5]}
+        castShadow
+        shadow-mapSize-width={512}
+        shadow-mapSize-height={512}
+      />
+      <pointLight intensity={0.8} position={[10, 10, 10]} />
+      <spotLight
+        intensity={1.5}
+        position={[15, 20, 10]}
+        angle={0.3}
+        penumbra={1}
+        castShadow
+        shadow-mapSize-width={512}
+        shadow-mapSize-height={512}
+      />
+    </>
+  );
+};
+
+const ARScene = memo((props) => {
+  const { children } = props;
+  return (
+    <ARCanvas
+      cameraParametersUrl="/data/camera_para.dat"
+      onCameraStreamReady={() => console.log("Camera stream ready")}
+      onCameraStreamError={() => console.error("Camera stream error")}
+      sourceType={"webcam"}
+    >
+      <Lights />
+      <ARMarker
+        debug={true}
+        params={{ smooth: true }}
+        type={"pattern"}
+        patternUrl={"/data/patt.hiro"}
+        onMarkerFound={() => {
+          console.log("Marker Found");
+        }}
+      >
+        {children}
+      </ARMarker>
+    </ARCanvas>
+  );
+});
 
 function ARID() {
   return (
@@ -79,6 +145,7 @@ function ARID() {
         position: "relative",
       }}
     >
+      <SideDrawer>Drawwer</SideDrawer>
       <Stack
         sx={{
           position: "absolute",
@@ -89,37 +156,12 @@ function ARID() {
           overflow: "hidden",
           justifyContent: "center",
           p: 2,
-          zIndex: 10000,
+          zIndex: 8800,
         }}
       >
-        <Typography
-          sx={{
-            border: "1px solid #9ad5b7",
-            padding: "1px",
-            bgcolor: HexToRGBA("#9ad5b7", 0.3),
-            width: { xs: 100, sm: 150, md: 250, lg: 300 },
-            p: "0.5rem",
-            borderRadius: "md",
-            boxShadow: "lg",
+        <BackToHomeButton />
 
-            "@keyframes slideIn": {
-              "0%": {
-                transform: "translateX(-100px)",
-                opacity: 0,
-              },
-              "100%": {
-                transform: "translateX(0)",
-                opacity: 1,
-              },
-            },
-            animation: "slideIn 0.5s ease-in-out",
-          }}
-        >
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloribus
-          est molestias cumque ipsa nobis? Facilis itaque esse nulla blanditiis
-          ad, atque earum saepe rem, quo reiciendis beatae eius doloremque
-          quibusdam.
-        </Typography>
+        <Main />
 
         <Box
           sx={{
@@ -143,44 +185,18 @@ function ARID() {
               boxShadow: "lg",
             }}
           >
-            <TooltipButton
-              tooltipProps={{
-                title: "Title",
-                placement: "top",
-                arrow: true,
-                sx: { bgcolor: "#9ad5b7" },
-              }}
-            >
-              a
-            </TooltipButton>
-            <IconButton>f</IconButton>
-            <IconButton>f</IconButton>
-            <IconButton>f</IconButton>
+            <HideInterfaceButton />
+            <DrawerButton />
+            <DisableLablesButton />
+            <LightToggleButton />
             <IconButton>f</IconButton>
           </Stack>
         </Box>
       </Stack>
 
-      <ARCanvas
-        cameraParametersUrl="/data/camera_para.dat"
-        onCameraStreamReady={() => console.log("Camera stream ready")}
-        onCameraStreamError={() => console.error("Camera stream error")}
-        sourceType={"webcam"}
-      >
-        <ambientLight />
-        <pointLight position={[10, 10, 0]} intensity={10.0} />
-        <ARMarker
-          debug={true}
-          params={{ smooth: true }}
-          type={"pattern"}
-          patternUrl={"/data/patt.hiro"}
-          onMarkerFound={() => {
-            console.log("Marker Found");
-          }}
-        >
-          <Scene />
-        </ARMarker>
-      </ARCanvas>
+      <ARScene>
+        <Scene />
+      </ARScene>
     </Stack>
   );
 }
