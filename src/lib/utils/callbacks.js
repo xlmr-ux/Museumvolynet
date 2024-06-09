@@ -1,5 +1,5 @@
 function createCallbackManager() {
-  let callbacks = new Set();
+  const callbacks = new Set();
 
   function add(callback) {
     callbacks.add(callback);
@@ -25,7 +25,6 @@ function createCallbackManager() {
     callbacks.forEach((callback) => {
       const result = callback(...args);
       if (condition(result)) {
-        // Invoke the callback only if the condition returns true
         callback(...args);
       }
     });
