@@ -6,17 +6,47 @@ import { Text, Billboard, Line } from "@react-three/drei";
 import ElementPointer from "../../components/ui/ElementPointer.jsx";
 import AdditionalText from "../../components/AdditionalText.jsx";
 
-import { Stack, Typography, IconButton, Box, Tooltip } from "@mui/joy";
+import {
+  Stack,
+  Typography,
+  IconButton,
+  Box,
+  Tooltip,
+  CircularProgress,
+} from "@mui/joy";
 import { HexToRGBA } from "../../lib/utils/colors.js";
+
+import useLastCallback from "../../lib/hooks/useLastCallback.js";
+import ModelViewer from "../../components/ui/ModelViewer.jsx";
+import TooltipButton from "../../components/TooltipButton.jsx";
 
 //[x, y, z]
 
-const Boxx = () => {
+const Scene = () => {
   const { model } = useParams();
+
+  const handleClick = () => {
+    console.log("Model clicked!");
+  };
+
+  const handleMouseEnter = () => {
+    console.log("Mouse entered model!");
+  };
+
+  const handleMouseLeave = () => {
+    console.log("Mouse left model!");
+  };
 
   return (
     <mesh position={[0, 0, 0]} scale={0.25}>
-      <Model path={`/data/models/${model}.glb`} />
+      <ModelViewer
+        path={`/data/models/${model}.glb`}
+        visible={true}
+        onClick={handleClick}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        onError={(error) => console.error("Error loading model:", error)}
+      />
 
       <AdditionalText
         text={"Lorem ipsum"}
@@ -36,24 +66,6 @@ const Boxx = () => {
         maxWidth={3}
       />
     </mesh>
-  );
-};
-
-function Model({ path }) {
-  const gltf = useGLTF(path);
-  const modelRef = useRef();
-  console.log(gltf);
-
-  return <primitive ref={modelRef} object={gltf.scene} />;
-}
-
-const TooltipButton = ({ children, tooltipProps = {}, buttonProps = {} }) => {
-  return (
-    <Tooltip title="Tooltip" {...tooltipProps}>
-      <span>
-        <IconButton {...buttonProps}>{children}</IconButton>
-      </span>
-    </Tooltip>
   );
 };
 
@@ -131,7 +143,14 @@ function ARID() {
               boxShadow: "lg",
             }}
           >
-            <TooltipButton tooltipProps={{ title: "Title", placement: "top", arrow: true, sx: { bgcolor: "#9ad5b7" } }}>
+            <TooltipButton
+              tooltipProps={{
+                title: "Title",
+                placement: "top",
+                arrow: true,
+                sx: { bgcolor: "#9ad5b7" },
+              }}
+            >
               a
             </TooltipButton>
             <IconButton>f</IconButton>
@@ -142,7 +161,7 @@ function ARID() {
         </Box>
       </Stack>
 
-      {/* <ARCanvas
+      <ARCanvas
         cameraParametersUrl="/data/camera_para.dat"
         onCameraStreamReady={() => console.log("Camera stream ready")}
         onCameraStreamError={() => console.error("Camera stream error")}
@@ -159,9 +178,9 @@ function ARID() {
             console.log("Marker Found");
           }}
         >
-          <Boxx />
+          <Scene />
         </ARMarker>
-      </ARCanvas> */}
+      </ARCanvas>
     </Stack>
   );
 }
