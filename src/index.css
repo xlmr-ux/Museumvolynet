@@ -1,4 +1,31 @@
-/* index.css */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+*::-webkit-scrollbar {
+  width: 0px;
+  padding: 0px;
+  display: none;
+}
+
+*::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  border-radius: 0px;
+}
+
+* {
+  scrollbar-width: none;
+  scrollbar-color: transparent transparent;
+  -ms-overflow-style: none;
+}
+
+*:hover {
+  scrollbar-color: transparent transparent;
+}
+
+*::-ms-scrollbar {
+  display: none;
+}
