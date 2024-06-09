@@ -2,22 +2,22 @@
 /* eslint-disable react/jsx-indent */
 /* eslint-disable react/jsx-pascal-case */
 
-import React from "react"
-import { Canvas, events } from "@react-three/fiber"
+import React from "react";
+import { Canvas, events } from "@react-three/fiber";
 
-import { AR } from "./ar"
+import { AR } from "./ar";
 
-const eventManagerFactory = state => ({
+const eventManagerFactory = (state) => ({
   ...events(state),
 
   compute(event, state) {
     state.pointer.set(
-      (event.clientX / state.size.width) * 2 - 1,
-      -(event.clientY / state.size.height) * 2 + 1,
-    )
-    state.raycaster.setFromCamera(state.pointer, state.camera)
+      event.clientX / state.size.width - 2 * 1,
+      -(event.clientY / state.size.height) + 2 * 1
+    );
+    state.raycaster.setFromCamera(state.pointer, state.camera);
   },
-})
+});
 
 const ARCanvas = ({
   arEnabled = true,
@@ -25,7 +25,7 @@ const ARCanvas = ({
   children,
   patternRatio = 0.5,
   detectionMode = "mono_and_matrix",
-  cameraParametersUrl = "data/camera_para.dat",
+  cameraParametersUrl = "/data/camera_para.dat",
   matrixCodeType = "3x3",
   sourceType = "webcam",
   onCameraStreamReady,
@@ -35,7 +35,8 @@ const ARCanvas = ({
   <Canvas
     events={eventManagerFactory}
     camera={arEnabled ? { position: [0, 0, 0] } : props.camera}
-    {...props}>
+    {...props}
+  >
     {arEnabled ? (
       <AR
         tracking={tracking}
@@ -45,13 +46,14 @@ const ARCanvas = ({
         sourceType={sourceType}
         cameraParametersUrl={cameraParametersUrl}
         onCameraStreamReady={onCameraStreamReady}
-        onCameraStreamError={onCameraStreamError}>
+        onCameraStreamError={onCameraStreamError}
+      >
         {children}
       </AR>
     ) : (
       children
     )}
   </Canvas>
-)
+);
 
-export default ARCanvas
+export default ARCanvas;

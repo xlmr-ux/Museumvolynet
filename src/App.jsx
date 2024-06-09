@@ -1,48 +1,35 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
+import Layout from "./components/Layout";
+import Gallery from "./pages/Gallery";
+import Home from "./pages/Home";
+import ARID from "./pages/ar[id]";
+import { Routes, Route, BrowserRouter } from "react-router-dom";
+import { CssBaseline, CssVarsProvider } from "@mui/joy";
+import { StrictMode } from "react";
+import { extendTheme } from "@mui/joy/styles";
 
-import { ARCanvas, ARMarker } from "./components/ar";
-import { useGLTF } from "@react-three/drei";
+const theme = extendTheme({});
 
-function Box() {
-  const [selected, setSelected] = useState(false);
-
+const App = () => {
   return (
-    <mesh onClick={() => setSelected(!selected)}>
-      <Model path="data/models/Womens Cairn.glb" />
-      <meshStandardMaterial color={selected ? "yellow" : "hotpink"} />
-    </mesh>
-  );
-}
-
-function Model({ path }) {
-  const gltf = useGLTF(path);
-  return <primitive scale={0.2} object={gltf.scene} />;
-}
-
-function App() {
-  return (
-    <ARCanvas
-      onCameraStreamReady={() => console.log("Camera stream ready")}
-      onCameraStreamError={() => console.error("Camera stream error")}
-      sourceType={"webcam"}
-    >
-      <ambientLight />
-      <pointLight position={[10, 10, 0]} intensity={10.0} />
-      <ARMarker
-        debug={true}
-        params={{ smooth: true }}
-        type={"pattern"}
-        patternUrl={"data/patt.hiro"}
-        onMarkerFound={() => {
-          console.log("Marker Found");
-        }}
+    <StrictMode>
+      <CssVarsProvider
+        defaultMode="dark"
+        theme={theme}
+        disableTransitionOnChange
       >
-        <Box />
-      </ARMarker>
-    </ARCanvas>
+        <CssBaseline />
+        <BrowserRouter>
+          <Routes>
+            <Route element={<Layout />}>
+              <Route path="" element={<Home />} />
+              <Route path="gallery" element={<Gallery />} />
+            </Route>
+            <Route path="ar/:model" element={<ARID />} />
+          </Routes>
+        </BrowserRouter>
+      </CssVarsProvider>
+    </StrictMode>
   );
-}
+};
 
 export default App;

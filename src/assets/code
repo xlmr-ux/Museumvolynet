@@ -1,0 +1,55 @@
+import { useState } from "react";
+
+import { ARCanvas, ARMarker } from "./components/ar";
+import { useGLTF } from "@react-three/drei";
+import { useFrame } from "@react-three/fiber";
+
+const Box = () => {
+  const [selected, setSelected] = useState(false);
+  const [position, setPosition] = useState([0, 0, 0]);
+
+  // Перемещаем бокс каждый кадр
+  useFrame(() => {
+    // Модифицируем позицию бокса, например, изменяем ее по оси Y для создания впечатления летающего эффекта
+    setPosition(prevPosition => [prevPosition[0], prevPosition[1] + Math.sin(Date.now() * 0.001) * 0.1, prevPosition[2]]);
+  });
+
+  return (
+    <mesh position={position} onClick={() => setSelected(!selected)}>
+      <Model path="data/models/duck_animation.glb" />
+      <meshStandardMaterial color={selected ? "yellow" : "hotpink"} />
+    </mesh>
+  );
+};
+
+
+function Model({ path }) {
+  const gltf = useGLTF(path);
+  return <primitive animate object={gltf.scene} />;
+}
+
+function App() {
+  return (
+    <ARCanvas
+      onCameraStreamReady={() => console.log("Camera stream ready")}
+      onCameraStreamError={() => console.error("Camera stream error")}
+      sourceType={"webcam"}
+    >
+      <ambientLight />
+      <pointLight position={[10, 10, 0]} intensity={10.0} />
+      <ARMarker
+        debug={true}
+        params={{ smooth: true }}
+        type={"pattern"}
+        patternUrl={"data/patt.hiro"}
+        onMarkerFound={() => {
+          console.log("Marker Found");
+        }}
+      >
+        <Box />
+      </ARMarker>
+    </ARCanvas>
+  );
+}
+
+export default App;
