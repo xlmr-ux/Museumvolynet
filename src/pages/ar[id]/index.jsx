@@ -27,11 +27,20 @@ import { useThree } from "@react-three/fiber";
 import { Color } from "three";
 import { useDocumentTitle } from "../../lib/hooks/useDocumentTitle.js";
 
+const capitalizeWords = (str) => {
+  if (!str) return "";
+  return str
+    .split(/[-_ ]+/)
+    .filter(Boolean)
+    .map((word) => word[0].toUpperCase() + word.slice(1).toLowerCase())
+    .join(" ");
+};
+
 const Scene = () => {
   const visible = useLabelsStore((state) => state.visible);
   const { model } = useParams();
 
-  useDocumentTitle(model.split("_").join(" "));
+  useDocumentTitle(capitalizeWords(model));
 
   const { modelData, setModelData } = useModelStore((state) => ({
     modelData: state.modelData,
