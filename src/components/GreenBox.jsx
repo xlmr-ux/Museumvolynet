@@ -12,9 +12,11 @@ const GreenBox = (props) => {
         padding: "1px",
         bgcolor: HexToRGBA("#9ad5b7", 0.2),
         width: { xs: 100, sm: 150, md: 250, lg: 300 },
+        height: { xs: 200, sm: 250, md: 350, lg: 400 },
         p: "0.5rem",
         borderRadius: "md",
         boxShadow: "lg",
+        overflowY: "auto",
       }}
     >
       {children}

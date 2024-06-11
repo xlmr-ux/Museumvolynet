@@ -178,7 +178,7 @@ const Layout = () => {
       </header>
 
       <main>
-        <Container sx={{ px: 4, maxHeight: "100dvh", overflow: "hidden" }}>
+        <Container sx={{ px: 4, maxHeight: "100dvh" }}>
           <Outlet />
         </Container>
       </main>

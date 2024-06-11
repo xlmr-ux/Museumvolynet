@@ -14,6 +14,12 @@ export const ModelData = [
           "This is the head of the angel statue, showcasing intricate details of the angel's face and hair.",
         from: [0, 16, 0],
         to: [5, 16, 4],
+        dimensions: {
+          height: 0.3,
+          width: 0.25,
+          depth: 0.2,
+          unit: "m",
+        },
       },
       {
         id: 2,
@@ -22,6 +28,12 @@ export const ModelData = [
           "The left wing of the angel, beautifully crafted to show the feathers and their delicate texture.",
         from: [-1, 15, 0],
         to: [-6, 15, 4],
+        dimensions: {
+          height: 0.5,
+          width: 1.2,
+          depth: 0.2,
+          unit: "m",
+        },
       },
       {
         id: 3,
@@ -30,6 +42,12 @@ export const ModelData = [
           "The right wing of the angel, mirroring the left with equal craftsmanship and attention to detail.",
         from: [1, 15, 0],
         to: [6, 15, 4],
+        dimensions: {
+          height: 0.5,
+          width: 1.2,
+          depth: 0.2,
+          unit: "m",
+        },
       },
       {
         id: 4,
@@ -38,14 +56,26 @@ export const ModelData = [
           "The base on which the angel statue stands, providing stability and a foundation for the statue.",
         from: [0, -1, 0],
         to: [5, -1, 4],
+        dimensions: {
+          height: 0.1,
+          width: 0.6,
+          depth: 0.6,
+          unit: "m",
+        },
       },
       {
         id: 5,
         name: "Statue Hands",
         description:
           "The hands of the angel, posed in a gentle and peaceful manner, adding to the overall serene appearance.",
-        from: [0, 8, 0],
+        from: [0, 12, 0],
         to: [5, 8, 4],
+        dimensions: {
+          height: 0.2,
+          width: 0.1,
+          depth: 0.1,
+          unit: "m",
+        },
       },
       {
         id: 6,
@@ -54,7 +84,20 @@ export const ModelData = [
           "The feet of the angel statue, firmly placed on the base, showing the attention to detail in the sculpture.",
         from: [0, 0, 0],
         to: [5, 0, 4],
+        dimensions: {
+          height: 0.15,
+          width: 0.1,
+          depth: 0.2,
+          unit: "m",
+        },
       },
     ],
+    dimensions: {
+      height: 1.8,
+      width: 0.5,
+      depth: 0.5,
+      scale: 0.2,
+      unit: "m",
+    },
   },
 ];

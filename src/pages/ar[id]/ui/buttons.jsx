@@ -1,8 +1,12 @@
-import { useDisplayStote, useLabelsStore, useSceneLightStore } from "../store";
+import { useSettingsStore } from "../store";
 import {
   ArrowBack,
+  CancelPresentation,
   ContentPasteGo,
   ContentPasteOff,
+  Label,
+  LabelOff,
+  ViewSidebar,
 } from "@mui/icons-material";
 import { IconButton } from "@mui/joy";
 import TooltipButton from "../../../components/TooltipButton";
@@ -22,9 +26,10 @@ const BackToHomeButton = () => {
 };
 
 const HideInterfaceButton = () => {
-  const { visible, toggle } = useDisplayStote((state) => ({
-    visible: state.visible,
-    toggle: state.toggle,
+  const {
+    display: { visible, toggle },
+  } = useSettingsStore((state) => ({
+    display: state.display,
   }));
 
   const handleToggle = () => {
@@ -56,16 +61,34 @@ const DrawerButton = () => {
     toggle();
   };
 
-  return <IconButton onClick={handleToggle}>D</IconButton>;
+  return (
+    <IconButton onClick={handleToggle}>
+      <ViewSidebar />
+    </IconButton>
+  );
 };
 
 const DisableLablesButton = () => {
-  const toggle = useLabelsStore((state) => state.toggle);
-  return <IconButton onClick={() => toggle()}>L</IconButton>;
+  const {
+    labels: { visible, toggle },
+  } = useSettingsStore((state) => ({
+    labels: state.labels,
+  }));
+
+  return (
+    <IconButton onClick={() => toggle()}>
+      {visible ? <Label /> : <LabelOff />}
+    </IconButton>
+  );
 };
 
 const LightToggleButton = () => {
-  const toggle = useSceneLightStore((state) => state.toggleLight);
+  const {
+    sceneLight: { toggle },
+  } = useSettingsStore((state) => ({
+    sceneLight: state.sceneLight,
+  }));
+
   return <IconButton onClick={() => toggle()}>Lg</IconButton>;
 };
 
