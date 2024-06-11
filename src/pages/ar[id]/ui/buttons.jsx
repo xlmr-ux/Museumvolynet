@@ -11,6 +11,7 @@ import {
 import { IconButton } from "@mui/joy";
 import TooltipButton from "../../../components/TooltipButton";
 import { useDrawerStore } from "../../../components/SideDrawer/store";
+import { useShallow } from "zustand/react/shallow";
 
 const BackToHomeButton = () => {
   return (
@@ -28,9 +29,11 @@ const BackToHomeButton = () => {
 const HideInterfaceButton = () => {
   const {
     display: { visible, toggle },
-  } = useSettingsStore((state) => ({
-    display: state.display,
-  }));
+  } = useSettingsStore(
+    useShallow((state) => ({
+      display: state.display,
+    }))
+  );
 
   const handleToggle = () => {
     toggle();
@@ -71,9 +74,11 @@ const DrawerButton = () => {
 const DisableLablesButton = () => {
   const {
     labels: { visible, toggle },
-  } = useSettingsStore((state) => ({
-    labels: state.labels,
-  }));
+  } = useSettingsStore(
+    useShallow((state) => ({
+      labels: state.labels,
+    }))
+  );
 
   return (
     <IconButton onClick={() => toggle()}>
@@ -85,9 +90,11 @@ const DisableLablesButton = () => {
 const LightToggleButton = () => {
   const {
     sceneLight: { toggle },
-  } = useSettingsStore((state) => ({
-    sceneLight: state.sceneLight,
-  }));
+  } = useSettingsStore(
+    useShallow((state) => ({
+      sceneLight: state.sceneLight,
+    }))
+  );
 
   return <IconButton onClick={() => toggle()}>Lg</IconButton>;
 };
