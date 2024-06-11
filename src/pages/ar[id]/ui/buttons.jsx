@@ -1,12 +1,19 @@
-import { useDisplayStote, useLabelsStore, useSceneLightStore } from "../store";
+import { useSettingsStore } from "../store";
 import {
   ArrowBack,
+  CancelPresentation,
   ContentPasteGo,
   ContentPasteOff,
+  HighlightOff,
+  Label,
+  LabelOff,
+  LightModeOutlined,
+  ViewSidebar,
 } from "@mui/icons-material";
 import { IconButton } from "@mui/joy";
 import TooltipButton from "../../../components/TooltipButton";
 import { useDrawerStore } from "../../../components/SideDrawer/store";
+import { useShallow } from "zustand/react/shallow";
 
 const BackToHomeButton = () => {
   return (
@@ -22,10 +29,13 @@ const BackToHomeButton = () => {
 };
 
 const HideInterfaceButton = () => {
-  const { visible, toggle } = useDisplayStote((state) => ({
-    visible: state.visible,
-    toggle: state.toggle,
-  }));
+  const {
+    display: { visible, toggle },
+  } = useSettingsStore(
+    useShallow((state) => ({
+      display: state.display,
+    }))
+  );
 
   const handleToggle = () => {
     toggle();
@@ -56,17 +66,43 @@ const DrawerButton = () => {
     toggle();
   };
 
-  return <IconButton onClick={handleToggle}>D</IconButton>;
+  return (
+    <IconButton onClick={handleToggle}>
+      <ViewSidebar />
+    </IconButton>
+  );
 };
 
 const DisableLablesButton = () => {
-  const toggle = useLabelsStore((state) => state.toggle);
-  return <IconButton onClick={() => toggle()}>L</IconButton>;
+  const {
+    labels: { visible, toggle },
+  } = useSettingsStore(
+    useShallow((state) => ({
+      labels: state.labels,
+    }))
+  );
+
+  return (
+    <IconButton onClick={() => toggle()}>
+      {visible ? <Label /> : <LabelOff />}
+    </IconButton>
+  );
 };
 
 const LightToggleButton = () => {
-  const toggle = useSceneLightStore((state) => state.toggleLight);
-  return <IconButton onClick={() => toggle()}>Lg</IconButton>;
+  const {
+    sceneLight: { visible, toggle },
+  } = useSettingsStore(
+    useShallow((state) => ({
+      sceneLight: state.sceneLight,
+    }))
+  );
+
+  return (
+    <IconButton onClick={() => toggle()}>
+      {!visible ? <LightModeOutlined /> : <HighlightOff />}
+    </IconButton>
+  );
 };
 
 export {

@@ -17,12 +17,16 @@ const AdditionalText = ({
       <mesh position={to}>
         <Billboard>
           <Text
-            position={[0, 0, 0.01]}
+            position={[1, 0, 1]}
             fontSize={fontSize}
-            color={color}
+            color="#9ad5b7"
             anchorX="center"
             anchorY="middle"
             maxWidth={maxWidth}
+            fontWeight="bold" // Example styling
+            letterSpacing="0.1em" // Example styling
+            outlineColor="#000" // Outline color
+            outlineWidth={0.1} // Outline width
           >
             {text}
           </Text>

@@ -23,10 +23,13 @@ const SideDrawer = ({ children, ...drawerProps }) => {
       {...drawerProps}
       open={visible}
       onClose={toggleDrawer}
-      variant="plain"
+      variant="soft"
       anchor={isMobile ? "top" : "left"}
-      sx={{ zIndex: 9999 }}
+      sx={{ zIndex: 9999,  }}
       slotProps={{
+        backdrop: {
+          sx: { backdropFilter: "blur(0px)" },
+        },
         content: {
           sx: {
             height: isMobile ? "100vh" : "100%",
@@ -45,10 +48,12 @@ const SideDrawer = ({ children, ...drawerProps }) => {
           p: 2,
           display: "flex",
           flexDirection: "column",
-          gap: 2,
+          gap: 0.25,
           height: "100%",
           overflow: "auto",
           zIndex: 9999,
+          bgcolor: "background.level1",
+
         }}
       >
         {children}
