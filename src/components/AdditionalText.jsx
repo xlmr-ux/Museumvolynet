@@ -17,7 +17,7 @@ const AdditionalText = ({
       <mesh position={to}>
         <Billboard>
           <Text
-            position={[0, 0, 0.01]}
+            position={[1, 0, 1]}
             fontSize={fontSize}
             color={color}
             anchorX="center"

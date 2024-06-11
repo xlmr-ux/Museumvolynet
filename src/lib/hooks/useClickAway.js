@@ -6,6 +6,7 @@ const useClickAway = (ref, cb) => {
       cb(event);
     }
   };
+
   useEffect(() => {
     document.addEventListener("click", handleClickAway);
 

@@ -7,11 +7,7 @@ import { Stack, IconButton, Box } from "@mui/joy";
 import { HexToRGBA } from "../../lib/utils/colors.js";
 
 import ModelViewer from "../../components/ui/ModelViewer.jsx";
-import {
-  useLabelsStore,
-  useModelStore,
-  useSceneLightStore,
-} from "./store/index.js";
+import { useModelStore, useSettingsStore } from "./store/index.js";
 import SideDrawer from "../../components/SideDrawer/index.jsx";
 import { ModelData } from "./api/index.js";
 import { memo, useEffect } from "react";
@@ -37,19 +33,16 @@ const capitalizeWords = (str) => {
 };
 
 const Scene = () => {
-  const visible = useLabelsStore((state) => state.visible);
-  const { model } = useParams();
-
-  useDocumentTitle(capitalizeWords(model));
-
-  const { modelData, setModelData } = useModelStore((state) => ({
+  const {
+    labels: { visible },
+  } = useSettingsStore((state) => ({
+    labels: state.labels,
+  }));
+  const { modelData } = useModelStore((state) => ({
     modelData: state.modelData,
-    setModelData: state.setModelData,
   }));
 
-  useEffect(() => {
-    setModelData(ModelData.find((data) => data.id === model));
-  }, [model]);
+  const { model } = useParams();
 
   const handleClick = () => {
     console.log("Model clicked!");
@@ -91,9 +84,9 @@ const Scene = () => {
 
 const Lights = () => {
   const { scene } = useThree();
-  const lightVisibility = useSceneLightStore((state) => state.lightVisibility);
+  const sceneLight = useSettingsStore((state) => state.sceneLight.visible);
 
-  scene.background = lightVisibility ? new Color(0xe3dac9) : null;
+  scene.background = sceneLight.visible ? new Color(0xe3dac9) : null;
 
   return (
     <>
@@ -145,6 +138,17 @@ const ARScene = memo((props) => {
 });
 
 function ARID() {
+  const { model } = useParams();
+  useDocumentTitle(capitalizeWords(model));
+
+  const { setModelData } = useModelStore((state) => ({
+    setModelData: state.setModelData,
+  }));
+
+  useEffect(() => {
+    setModelData(ModelData.find((data) => data.id === model));
+  }, [model]);
+
   return (
     <Stack
       sx={{

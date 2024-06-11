@@ -27,6 +27,8 @@
   },
   "devDependencies": {
     "@babel/runtime": "7.13.8",
+    "@playwright/test": "^1.44.1",
+    "@types/node": "^20.14.2",
     "@types/react": "^18.2.66",
     "@types/react-dom": "^18.2.22",
     "@vitejs/plugin-react": "^4.2.1",
