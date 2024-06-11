@@ -35,11 +35,14 @@ const data = [
           "The Angel Statue, overlooking the scenic beauty of Paris, is a breathtaking symbol of grace and elegance. It embodies the artistic spirit of the city and attracts visitors from all over the world with its timeless beauty.",
       },
       {
-        id: 3,
+        id: "terracotta_warrior",
+        model: "terracotta_warrior",
         imgSrc:
-          "https://images.unsplash.com/photo-1521747116042-5a810fda9664?auto=format&fit=crop&w=318",
+          "https://cdn-clgjg.nitrocdn.com/pXttjEUPCiavMxidZxdFyebXFgbanAtR/assets/images/optimized/rev-0907155/asianartnewspaper.com/wp-content/uploads/2018/03/1-Archer.jpg",
         imgAlt: "The Starry Night",
         title: "The Starry Night",
+        description:
+          "The Terracotta Warriors are a collection of clay sculptures depicting the armies of Qin Shi Huang, the first Emperor of China. They were buried with the emperor to protect him in his afterlife. The statues are considered one of the most significant archaeological discoveries of the 20th century.",
         location: "Museum of Modern Art, New York",
         views: "7.1k",
         time: "3 hours ago",

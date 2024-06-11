@@ -7,7 +7,11 @@ import { Stack, IconButton, Box, Slider } from "@mui/joy";
 import { HexToRGBA } from "../../lib/utils/colors.js";
 
 import ModelViewer from "../../components/ui/ModelViewer.jsx";
-import { useModelStore, useSettingsStore } from "./store/index.js";
+import {
+  useLightSettingsStore,
+  useModelStore,
+  useSettingsStore,
+} from "./store/index.js";
 import SideDrawer from "../../components/SideDrawer/index.jsx";
 import { ModelData } from "./api/index.js";
 import { memo, useEffect } from "react";
@@ -89,31 +93,54 @@ const Scene = () => {
 
 const Lights = () => {
   const { scene } = useThree();
-  const { sceneLight: { visible } } = useSettingsStore((state) => ({
+  const {
+    sceneLight: { visible },
+  } = useSettingsStore((state) => ({
     sceneLight: state.sceneLight,
   }));
+
+  const {
+    ambientLightIntensity,
+    directionalLightIntensity,
+    directionalLightPosition,
+    directionalLightCastShadow,
+    directionalLightShadowMapSizeWidth,
+    directionalLightShadowMapSizeHeight,
+    pointLightIntensity,
+    pointLightPosition,
+    spotLightIntensity,
+    spotLightPosition,
+    spotLightAngle,
+    spotLightPenumbra,
+    spotLightCastShadow,
+    spotLightShadowMapSizeWidth,
+    spotLightShadowMapSizeHeight,
+  } = useLightSettingsStore();
 
   scene.background = visible ? new Color(0x000000) : null;
 
   return (
     <>
-      <ambientLight intensity={0.5} />
+      <ambientLight intensity={ambientLightIntensity} />
       <directionalLight
-        intensity={1}
-        position={[5, 10, 7.5]}
-        castShadow
-        shadow-mapSize-width={512}
-        shadow-mapSize-height={512}
+        intensity={directionalLightIntensity}
+        position={directionalLightPosition}
+        castShadow={directionalLightCastShadow}
+        shadow-mapSize-width={directionalLightShadowMapSizeWidth}
+        shadow-mapSize-height={directionalLightShadowMapSizeHeight}
       />
-      <pointLight intensity={0.8} position={[10, 10, 10]} />
+      <pointLight
+        intensity={pointLightIntensity}
+        position={pointLightPosition}
+      />
       <spotLight
-        intensity={1.5}
-        position={[15, 20, 10]}
-        angle={0.3}
-        penumbra={1}
-        castShadow
-        shadow-mapSize-width={512}
-        shadow-mapSize-height={512}
+        intensity={spotLightIntensity}
+        position={spotLightPosition}
+        angle={spotLightAngle}
+        penumbra={spotLightPenumbra}
+        castShadow={spotLightCastShadow}
+        shadow-mapSize-width={spotLightShadowMapSizeWidth}
+        shadow-mapSize-height={spotLightShadowMapSizeHeight}
       />
     </>
   );

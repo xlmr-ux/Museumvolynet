@@ -25,10 +25,10 @@ const SideDrawer = ({ children, ...drawerProps }) => {
       onClose={toggleDrawer}
       variant="soft"
       anchor={isMobile ? "top" : "left"}
-      sx={{ zIndex: 9999 }}
+      sx={{ zIndex: 9999,  }}
       slotProps={{
         backdrop: {
-          sx: { backdropFilter: "blur(10px)" },
+          sx: { backdropFilter: "blur(0px)" },
         },
         content: {
           sx: {

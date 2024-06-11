@@ -1,5 +1,5 @@
 import { useModelStore, useSettingsStore } from "../../store";
-import { Stack, Typography } from "@mui/joy";
+import { AspectRatio, Stack, Typography } from "@mui/joy";
 import GreenBox from "../../../../components/GreenBox";
 import AccordionGroup from "@mui/joy/AccordionGroup";
 import Accordion from "@mui/joy/Accordion";
@@ -32,13 +32,17 @@ const Main = () => {
         </GreenBox>
 
         <GreenBox sx={{ flexDirection: "column" }}>
+          <AspectRatio ratio="16/9" sx={{ width: "100%", borderRadius: "sm", border: "2px solid #9ad5b7" }}>
+            <img src={modelData?.url} />
+          </AspectRatio>
+
           <Typography level="body-md">{modelData?.description}</Typography>
         </GreenBox>
       </Stack>
 
       <Stack gap={1}>
         <GreenBox sx={{ flexDirection: "column", height: "min-content" }}>
-          <Typography level="h2">{modelData?.title}</Typography>
+          <Typography level="h2">Parts</Typography>
         </GreenBox>
         <GreenBox>
           <AccordionGroup
