@@ -3,7 +3,7 @@ import { ARCanvas, ARMarker } from "../../components/ar";
 
 import AdditionalText from "../../components/AdditionalText.jsx";
 
-import { Stack, IconButton, Box } from "@mui/joy";
+import { Stack, IconButton, Box, Slider } from "@mui/joy";
 import { HexToRGBA } from "../../lib/utils/colors.js";
 
 import ModelViewer from "../../components/ui/ModelViewer.jsx";
@@ -22,6 +22,8 @@ import Main from "./ui/middle/Main.jsx";
 import { useThree } from "@react-three/fiber";
 import { Color } from "three";
 import { useDocumentTitle } from "../../lib/hooks/useDocumentTitle.js";
+import useLastCallback from "../../lib/hooks/useLastCallback.js";
+import Left from "./ui/left/Left.jsx";
 
 const capitalizeWords = (str) => {
   if (!str) return "";
@@ -35,9 +37,12 @@ const capitalizeWords = (str) => {
 const Scene = () => {
   const {
     labels: { visible },
+    scale: { value },
   } = useSettingsStore((state) => ({
     labels: state.labels,
+    scale: state.scale,
   }));
+
   const { modelData } = useModelStore((state) => ({
     modelData: state.modelData,
   }));
@@ -57,7 +62,7 @@ const Scene = () => {
   };
 
   return (
-    <mesh position={[0, 0, 0]} scale={0.25}>
+    <mesh position={[0, 0, 0]} scale={value}>
       <ModelViewer
         path={`/data/models/${model}.glb`}
         visible={true}
@@ -158,7 +163,6 @@ function ARID() {
         position: "relative",
       }}
     >
-      <SideDrawer>Drawwer</SideDrawer>
       <Stack
         sx={{
           position: "absolute",
@@ -174,6 +178,7 @@ function ARID() {
       >
         <BackToHomeButton />
 
+        <Left />
         <Main />
 
         <Box

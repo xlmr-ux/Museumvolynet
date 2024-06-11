@@ -34,6 +34,13 @@ export const useSettingsStore = create((set) => ({
         },
       })),
   },
+
+  scale: {
+    value: 0.2,
+    step: 0.1,
+    setStep: (step) => set((state) => ({ scale: { ...state.scale, step } })),
+    setValue: (value) => set((state) => ({ scale: { ...state.scale, value } })),
+  },
 }));
 
 export const useModelStore = create((set) => ({
