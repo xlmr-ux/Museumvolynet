@@ -89,9 +89,11 @@ const Scene = () => {
 
 const Lights = () => {
   const { scene } = useThree();
-  const sceneLight = useSettingsStore((state) => state.sceneLight.visible);
+  const { sceneLight: { visible } } = useSettingsStore((state) => ({
+    sceneLight: state.sceneLight,
+  }));
 
-  scene.background = sceneLight.visible ? new Color(0xe3dac9) : null;
+  scene.background = visible ? new Color(0x000000) : null;
 
   return (
     <>
@@ -207,7 +209,6 @@ function ARID() {
             <DrawerButton />
             <DisableLablesButton />
             <LightToggleButton />
-            <IconButton>f</IconButton>
           </Stack>
         </Box>
       </Stack>

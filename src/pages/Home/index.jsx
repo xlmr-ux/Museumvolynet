@@ -6,29 +6,33 @@ import { Fragment, useState } from "react";
 
 const data = [
   {
-    title: "Art",
+    title: "Exhibitions",
     data: [
       {
-        id: "womens_cairn",
-        model: "womens_cairn",
+        id: "pyramid",
+        model: "pyramid",
         imgSrc:
-          "https://images.unsplash.com/photo-1532614338840-ab30cf10ed36?auto=format&fit=crop&w=318",
-        imgAlt: "Yosemite National Park",
-        title: "Yosemite National Park",
-        location: "California",
+          "https://cdn.britannica.com/06/122506-050-C8E03A8A/Pyramid-of-Khafre-Giza-Egypt.jpg",
+        imgAlt: "Pyramid",
+        title: "Pyramid",
+        location: "Egypt",
         views: "6.3k",
         time: "1 hour ago",
+        description:
+          "A magnificent ancient structure with a rich history, the Pyramid is a testament to the architectural prowess of ancient Egypt. It stands as a symbol of the pharaohs' power and the mysteries of their civilization.",
       },
       {
         id: "angel_statue",
         model: "angel_statue",
         imgSrc:
-          "https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0?auto=format&fit=crop&w=318",
-        imgAlt: "Eiffel Tower",
-        title: "Eiffel Tower",
+          "https://t3.ftcdn.net/jpg/05/76/00/82/360_F_576008288_Sw1JWdLINBO8kSoX8mm2GtK9NbO2T6wQ.jpg",
+        imgAlt: "Angel Statue",
+        title: "Angel Statue",
         location: "Paris",
         views: "8.2k",
         time: "2 hours ago",
+        description:
+          "The Angel Statue, overlooking the scenic beauty of Paris, is a breathtaking symbol of grace and elegance. It embodies the artistic spirit of the city and attracts visitors from all over the world with its timeless beauty.",
       },
       {
         id: 3,
@@ -203,6 +207,7 @@ const Home = () => {
                 views,
                 time,
                 model,
+                description,
               }) => (
                 <Exhibition
                   href={`/ar/${model}`}
@@ -213,6 +218,7 @@ const Home = () => {
                   location={location}
                   views={views}
                   time={time}
+                  description={description}
                 />
               )}
             />

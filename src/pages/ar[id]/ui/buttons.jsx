@@ -4,8 +4,10 @@ import {
   CancelPresentation,
   ContentPasteGo,
   ContentPasteOff,
+  HighlightOff,
   Label,
   LabelOff,
+  LightModeOutlined,
   ViewSidebar,
 } from "@mui/icons-material";
 import { IconButton } from "@mui/joy";
@@ -89,14 +91,18 @@ const DisableLablesButton = () => {
 
 const LightToggleButton = () => {
   const {
-    sceneLight: { toggle },
+    sceneLight: { visible, toggle },
   } = useSettingsStore(
     useShallow((state) => ({
       sceneLight: state.sceneLight,
     }))
   );
 
-  return <IconButton onClick={() => toggle()}>Lg</IconButton>;
+  return (
+    <IconButton onClick={() => toggle()}>
+      {!visible ? <LightModeOutlined /> : <HighlightOff />}
+    </IconButton>
+  );
 };
 
 export {

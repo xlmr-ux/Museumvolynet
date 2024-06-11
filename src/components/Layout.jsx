@@ -183,7 +183,6 @@ const Layout = () => {
         </Container>
       </main>
 
-      <Footer />
     </Box>
   );
 };
