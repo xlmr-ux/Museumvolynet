@@ -33,7 +33,7 @@ const Navbar = () => (
           sx={{ height: 32, mr: 2 }}
         />
         <Typography level="h4" component="span">
-          Flowbite
+          AR Museum
         </Typography>
       </Box>
       <IconButton

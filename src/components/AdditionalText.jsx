@@ -23,10 +23,10 @@ const AdditionalText = ({
             anchorX="center"
             anchorY="middle"
             maxWidth={maxWidth}
-            fontWeight="bold" // Example styling
-            letterSpacing="0.1em" // Example styling
-            outlineColor="#000" // Outline color
-            outlineWidth={0.1} // Outline width
+            fontWeight="bold"
+            letterSpacing="0.1em"
+            outlineColor="#000"
+            outlineWidth={0.1}
           >
             {text}
           </Text>

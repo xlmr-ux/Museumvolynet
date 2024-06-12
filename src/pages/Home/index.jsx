@@ -39,8 +39,8 @@ const data = [
         model: "terracotta_warrior",
         imgSrc:
           "https://cdn-clgjg.nitrocdn.com/pXttjEUPCiavMxidZxdFyebXFgbanAtR/assets/images/optimized/rev-0907155/asianartnewspaper.com/wp-content/uploads/2018/03/1-Archer.jpg",
-        imgAlt: "The Starry Night",
-        title: "The Starry Night",
+        imgAlt: "The Terracotta Warriors",
+        title: "The Terracotta Warriors",
         description:
           "The Terracotta Warriors are a collection of clay sculptures depicting the armies of Qin Shi Huang, the first Emperor of China. They were buried with the emperor to protect him in his afterlife. The statues are considered one of the most significant archaeological discoveries of the 20th century.",
         location: "Museum of Modern Art, New York",
@@ -169,7 +169,6 @@ const Home = () => {
 
   return (
     <Box sx={{ py: 0.5 }}>
-      {/* Search input */}
       <Input
         type="text"
         placeholder="Search..."

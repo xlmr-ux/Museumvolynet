@@ -14,7 +14,7 @@ const GreenBox = (props) => {
         backdropFilter: "blur(10px)",
         transition: "all 0.3s ease-in-out",
         boxShadow: "lg",
-        width: { xs: 100, sm: 150, md: 250, lg: 300 },
+        width: { xs: 150, sm: 200, md: 250, lg: 300 },
         height: { xs: 200, sm: 250, md: 350, lg: 400 },
         p: "0.25rem",
         borderRadius: "md",

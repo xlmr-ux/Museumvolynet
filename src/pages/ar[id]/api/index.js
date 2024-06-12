@@ -14,7 +14,7 @@ export const ModelData = [
         description:
           "This is the head of the angel statue, showcasing intricate details of the angel's face and hair.",
         from: [0, 16, 0],
-        to: [5, 16, 4],
+        to: [-5, 16, -4],
         dimensions: {
           height: 0.3,
           width: 0.25,

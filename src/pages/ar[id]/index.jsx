@@ -3,7 +3,7 @@ import { ARCanvas, ARMarker } from "../../components/ar";
 
 import AdditionalText from "../../components/AdditionalText.jsx";
 
-import { Stack, IconButton, Box, Slider } from "@mui/joy";
+import { Stack, Box } from "@mui/joy";
 import { HexToRGBA } from "../../lib/utils/colors.js";
 
 import ModelViewer from "../../components/ui/ModelViewer.jsx";
@@ -12,7 +12,6 @@ import {
   useModelStore,
   useSettingsStore,
 } from "./store/index.js";
-import SideDrawer from "../../components/SideDrawer/index.jsx";
 import { ModelData } from "./api/index.js";
 import { memo, useEffect } from "react";
 import {
@@ -26,7 +25,6 @@ import Main from "./ui/middle/Main.jsx";
 import { useThree } from "@react-three/fiber";
 import { Color } from "three";
 import { useDocumentTitle } from "../../lib/hooks/useDocumentTitle.js";
-import useLastCallback from "../../lib/hooks/useLastCallback.js";
 import Left from "./ui/left/Left.jsx";
 
 const capitalizeWords = (str) => {
@@ -77,15 +75,17 @@ const Scene = () => {
       />
       {visible &&
         modelData?.labels?.map((label) => (
-          <AdditionalText
-            key={label.id}
-            text={label.name}
-            from={label.from}
-            to={label.to}
-            fontSize={0.5}
-            color="white"
-            maxWidth={3}
-          />
+          <group>
+            <AdditionalText
+              key={label.id}
+              text={label.name}
+              from={label.from}
+              to={label.to}
+              fontSize={0.7}
+              color="white"
+              maxWidth={3}
+            />
+          </group>
         ))}
     </mesh>
   );
