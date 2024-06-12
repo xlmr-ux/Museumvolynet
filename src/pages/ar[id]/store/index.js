@@ -1,7 +1,6 @@
 import { create } from "zustand";
 
 export const useSettingsStore = create((set) => ({
-  // Display Store
   display: {
     visible: false,
     toggle: () =>
@@ -14,7 +13,6 @@ export const useSettingsStore = create((set) => ({
       })),
   },
 
-  // Labels Store
   labels: {
     visible: false,
     toggle: () =>
@@ -23,7 +21,6 @@ export const useSettingsStore = create((set) => ({
       })),
   },
 
-  // Scene Light Store
   sceneLight: {
     visible: false,
     toggle: () =>

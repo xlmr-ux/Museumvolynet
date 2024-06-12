@@ -21,15 +21,6 @@ function createCallbackManager() {
     callbacks.forEach((callback) => callback(...args));
   }
 
-  function invokeWithCondition(condition, ...args) {
-    callbacks.forEach((callback) => {
-      const result = callback(...args);
-      if (condition(result)) {
-        callback(...args);
-      }
-    });
-  }
-
   function getCallbackCount() {
     return callbacks.size;
   }
@@ -39,7 +30,6 @@ function createCallbackManager() {
     remove,
     clear,
     invoke,
-    invokeWithCondition,
     getCallbackCount,
   };
 }
