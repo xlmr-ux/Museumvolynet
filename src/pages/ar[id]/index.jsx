@@ -1,11 +1,8 @@
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { ARCanvas, ARMarker } from "../../components/ar";
-
 import AdditionalText from "../../components/AdditionalText.jsx";
-
 import { Stack, Box } from "@mui/joy";
 import { HexToRGBA } from "../../lib/utils/colors.js";
-
 import ModelViewer from "../../components/ui/ModelViewer.jsx";
 import {
   useLightSettingsStore,
@@ -63,6 +60,8 @@ const Scene = () => {
     console.log("Mouse left model!");
   };
 
+  if (!modelData) return null;
+
   return (
     <mesh position={[0, 0, 0]} scale={value}>
       <ModelViewer
@@ -75,9 +74,8 @@ const Scene = () => {
       />
       {visible &&
         modelData?.labels?.map((label) => (
-          <group>
+          <group key={label.id}>
             <AdditionalText
-              key={label.id}
               text={label.name}
               from={label.from}
               to={label.to}
@@ -173,6 +171,7 @@ const ARScene = memo((props) => {
 
 function ARID() {
   const { model } = useParams();
+  const navigate = useNavigate();
   useDocumentTitle(capitalizeWords(model));
 
   const { setModelData } = useModelStore((state) => ({
@@ -180,8 +179,26 @@ function ARID() {
   }));
 
   useEffect(() => {
-    setModelData(ModelData.find((data) => data.id === model));
-  }, [model]);
+    // Validate model ID before proceeding
+    const validModel = ModelData.find((data) => data.id === model);
+    if (!validModel) {
+      console.error(`Invalid model ID: ${model}`);
+      navigate("/", { replace: true });
+      return;
+    }
+
+    setModelData(validModel);
+
+    // Add canonical tag for SEO
+    const canonical = document.createElement("link");
+    canonical.rel = "canonical";
+    canonical.href = window.location.href;
+    document.head.appendChild(canonical);
+
+    return () => {
+      document.head.removeChild(canonical);
+    };
+  }, [model, navigate, setModelData]);
 
   return (
     <Stack
